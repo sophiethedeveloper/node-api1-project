@@ -84,6 +84,22 @@ app.get('/api/users/:id', (req, res) => {
 })
 
 
+// [DELETE] deletes user
+app.delete('/api/users/:id', (req, res) => {
+    const { id } = req.params
+
+    try {
+        if (!users.find(user => user.id === id)){
+            res.status(404).json({message: "The user with the specified ID does not exist."})
+        } else {
+            users = users.filter(user => user.id !== id)
+            res.status(200).json({message: `User with the id ${id} got deleted!`})
+        }
+    } catch (error) {
+        res.status(500).json({errorMessage: "The user could not be removed"})
+    }
+})
+
 
 
 
