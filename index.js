@@ -65,6 +65,28 @@ app.get('/api/users', (req, res) => {
     }
 })
 
+// [GET] get one user depending on the id
+
+app.get('/api/users/:id', (req, res) => {
+    const { id } = req.params;
+
+    const user = users.find((user) => user.id === id);
+
+    try {
+        if (!user) {
+            res.status(404).json({ message: "The user with the specified ID does not exist." })
+        } else {
+            res.status(200).json(user)
+        }
+    } catch (error) {
+        res.status(500).json({errorMessage: "The user information could not be retrieved."})
+    }
+})
+
+
+
+
+
 app.use("*", (req, res) => {
   res.status(404).json({ message: "Not Found" });
 });
